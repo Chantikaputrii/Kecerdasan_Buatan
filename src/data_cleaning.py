@@ -58,15 +58,15 @@ def clean_data(path, output_path="data/cleaned_heart_attack_indonesia.csv"):
     df = df.drop_duplicates()
     print(f"\n🔧 Duplikasi dihapus: {before - len(df)} baris")
 
-    # --- (b) Tangani Missing Value ---
-    for col in df.columns:
-        if df[col].dtype == "object":
-            df[col] = df[col].fillna(df[col].mode()[0])
-        else:
-            df[col] = df[col].fillna(df[col].mean())
+    # --- (b) Tangani Missing Value ---  
+    for col in df.columns:  
+        if df[col].dtype == "object":  
+            df[col] = df[col].fillna("0")  
+        else:  
+            df[col] = df[col].fillna(0) 
 
     print("\n📌 Missing Value Setelah Cleaning:")
-    print(df.isna().sum())
+    print(df.isna().sum())  # Verifikasi tidak ada NaN tersisa
 
     # --- (c) Perbaikan Tipe Data ---
     for col in df.columns:

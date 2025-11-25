@@ -34,12 +34,12 @@ def clean_data(df, output_path="data/cleaned_heart_attack_indonesia.csv"):
 
     for col in df.columns:
         if df[col].dtype == "object":
-            df[col] = df[col].fillna(df[col].mode()[0])
+            df[col] = df[col].fillna("0")  # replaced mode()[0] with "0"
         else:
-            df[col] = df[col].fillna(df[col].mean())
+            df[col] = df[col].fillna(0)     # replaced mean() with 0
 
     print("\n📌 Jumlah Missing Value setelah cleaning:")
-    print(df.isna().sum())
+    print(df.isna().sum())  # Verification no NaNs remain
 
     for col in df.columns:
         try:
