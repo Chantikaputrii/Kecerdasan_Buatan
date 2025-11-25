@@ -68,4 +68,4 @@ def clean_data(df, output_path="data/cleaned_heart_attack_indonesia.csv"):
     df.to_csv(output_path, index=False)
     print(f"\n Dataset bersih berhasil disimpan sebagai {output_path}")
 
-    return df
+    return df 
