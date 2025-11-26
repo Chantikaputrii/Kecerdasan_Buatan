@@ -1,6 +1,7 @@
 from src.data_mining import load_data
 from src.refined_data_cleaning import clean_data
 from src.data_exploration import explore_data
+from src.data_visualisation_communication import main as run_full_ml_pipeline
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -27,18 +28,30 @@ def plot_before_after(before_df, after_df, column, numeric=True):
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
-    plt.pause(0.001)  # Add pause to ensure plot window updates
+    plt.pause(0.001)
 
-# Step 1: Mining
-df = load_data()
+def run_all_pipelines():
+    print("\n=======================================================")
+    print("--- Running Initial Data Mining, Cleaning, and EDA ---")
+    print("=======================================================")
+    
+    # Step 1: Mining
+    df = load_data()
+    
+    # Step 2: Cleaning
+    df_clean = clean_data(df)
+    
+    # Step 3: EDA
+    explore_data(df_clean)
+    
+    for col in df_clean.columns:
+        numeric = pd.api.types.is_numeric_dtype(df_clean[col])
+        plot_before_after(df, df_clean, col, numeric)
+        
+    print("\n=========================================================================================================")
+    print("--- Running Full Machine Learning Pipeline (Feature Engineering, Predictive Modeling, and Visualization) ---")
+    print("=========================================================================================================")
+    run_full_ml_pipeline()
 
-# Step 2: Cleaning
-df_clean = clean_data(df)
-
-# Step 3: EDA
-explore_data(df_clean)
-
-# Plot before and after cleaning for each column
-for col in df_clean.columns:
-    numeric = pd.api.types.is_numeric_dtype(df_clean[col])
-    plot_before_after(df, df_clean, col, numeric)
+if __name__ == "__main__":
+    run_all_pipelines()
